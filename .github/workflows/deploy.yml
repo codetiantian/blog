@@ -33,6 +33,16 @@ jobs:
           # 缓存 pnpm 依赖
           cache: pnpm
 
+      - name: Cache pnpm dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pnpm-store
+            node_modules
+            key: ${{ runner.os }}-pnpm-cache-${{ hashFiles('**/package-lock.json') }}
+            restore-keys: |
+            ${{ runner.os }}-pnpm-cache-
+
       # 运行构建脚本
       - name: Build VuePress site
         run: pnpm build
